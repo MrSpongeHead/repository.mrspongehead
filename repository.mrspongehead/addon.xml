@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="repository.mrspongehead" name="MrSpongeHead Repository" version="1.0.0" provider-name="MrSpongeHead">
+    <extension point="xbmc.addon.repository" name="MrSpongeHead Repository">
+        <dir>
+            <info compressed="false">https://mrspongehead.github.io/repository.mrspongehead/zips/addons.xml</info>
+            <checksum>https://mrspongehead.github.io/repository.mrspongehead/zips/addons.xml.md5</checksum>
+            <datadir zip="true">https://mrspongehead.github.io/repository.mrspongehead/zips/</datadir>
+            <hashes>false</hashes>
+        </dir>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">Add-ons by MrSpongeHead, including SpongeTV</summary>
+        <description lang="en_GB">Installs and keeps up to date the add-ons published by MrSpongeHead.</description>
+        <platform>all</platform>
+        <license>GPL-3.0-or-later</license>
+        <source>https://github.com/MrSpongeHead/repository.mrspongehead</source>
+        <assets>
+            <icon>icon.png</icon>
+        </assets>
+    </extension>
+</addon>
