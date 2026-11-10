@@ -49,7 +49,20 @@ def add_zip(path):
         version = root.get("version")
         target_dir = os.path.join(ZIPS, addon_id)
         os.makedirs(target_dir, exist_ok=True)
-        shutil.copyfile(path, os.path.join(target_dir, f"{addon_id}-{version}.zip"))
+        target = os.path.join(target_dir, f"{addon_id}-{version}.zip")
+        # Kodi only updates when the version goes up, so a changed build under a number already
+        # published would never reach anyone who has it: refuse, rather than publish it silently
+        published = [n[len(addon_id) + 1:-4] for n in os.listdir(target_dir)
+                     if n.startswith(addon_id + "-") and n.endswith(".zip")]
+        newest = max(published, key=version_key, default=None)
+        if os.path.exists(target):
+            with open(target, "rb") as old, open(path, "rb") as new:
+                if old.read() != new.read():
+                    raise SystemExit(f"{addon_id} {version} is already published with different contents: "
+                                     "raise the version number")
+        elif newest and version_key(version) < version_key(newest):
+            raise SystemExit(f"{addon_id} {version} is older than the published {newest}: raise the version number")
+        shutil.copyfile(path, target)
         assets = root.find(".//assets")
         for asset in (assets if assets is not None else []):
             if asset.text and f"{addon_id}/{asset.text}" in names:
